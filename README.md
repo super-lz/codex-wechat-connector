@@ -4,7 +4,7 @@
 
 WeChat bridge for local Codex App Server sessions.
 
-![WeChat demo](./assets/demo.jpg)
+<img src="./assets/demo.jpg" alt="WeChat demo" width="320" />
 
 ## Overview
 
@@ -96,7 +96,7 @@ If you want the launcher to load env vars automatically, put them into `config/e
 Example:
 - [env.example.sh](./env.example.sh)
 
-## File Transfer
+## Bridge Actions
 
 To send a local file or image back to WeChat, or to ask the gateway to switch workspace or reset thread, Codex can include a `codex-actions` block:
 
@@ -123,6 +123,21 @@ Rules:
 - `workspace.set`, `workspace.reset`, and `thread.reset` are supported host control actions
 - WeChat may transcode `image`; use `file` if format preservation matters
 
+Inside WeChat, you can also ask in natural language, such as `switch to /path/to/project and continue there`.
+
+Slash commands are still available as a fallback:
+
+```text
+/workspace
+/workspace set /absolute/path
+/workspace reset
+/thread reset
+```
+
+Changing the workspace resets the current thread automatically, so the next message starts fresh in the new directory.
+
+Note: natural-language bridge actions depend on the developer instructions attached when a thread is created. If behavior seems stale after upgrading the gateway, reset the thread and try again.
+
 ## Common Commands
 
 ```bash
@@ -136,19 +151,6 @@ npm run reset -- all
 ```
 
 `reset -- state` clears saved gateway state. `reset -- all` also removes user workspaces.
-
-## Chat Control
-
-Inside WeChat, you can either ask in natural language, such as `switch to /path/to/project and continue there`, or use explicit slash commands:
-
-```text
-/workspace
-/workspace set /absolute/path
-/workspace reset
-/thread reset
-```
-
-Changing the workspace resets the current thread automatically, so the next message starts fresh in the new directory.
 
 ## Development
 

@@ -25,6 +25,8 @@ Core responsibilities:
   Main gateway loop for inbound WeChat messages and outbound replies.
 - [src/bridge/control.ts](./src/bridge/control.ts)
   Host-side control behavior and slash-command fallback.
+- [src/bridge/outbound-actions.ts](./src/bridge/outbound-actions.ts)
+  Execution of outbound send actions such as images and files.
 - [src/codex/](./src/codex)
   Codex App Server client, protocol types, and developer instructions.
 - [src/gateway/](./src/gateway)
@@ -109,6 +111,7 @@ The parser lives in:
 Host-side execution lives in:
 
 - [src/bridge/control.ts](./src/bridge/control.ts)
+- [src/bridge/outbound-actions.ts](./src/bridge/outbound-actions.ts)
 
 ## Where To Change Things
 
@@ -125,6 +128,8 @@ If you need to change...
   - [src/codex/app-server-client.ts](./src/codex/app-server-client.ts)
 - Built-in host control behavior:
   - [src/bridge/control.ts](./src/bridge/control.ts)
+- Outbound send behavior:
+  - [src/bridge/outbound-actions.ts](./src/bridge/outbound-actions.ts)
 - Per-user workspace or thread state:
   - [src/gateway/session-manager.ts](./src/gateway/session-manager.ts)
   - [src/gateway/workspace.ts](./src/gateway/workspace.ts)
@@ -137,7 +142,7 @@ If you need to change...
 When adding a new action such as `gateway.restart` or `workspace.list`, update all of:
 
 1. [src/protocol/actions.ts](./src/protocol/actions.ts)
-2. [src/bridge/control.ts](./src/bridge/control.ts)
+2. [src/bridge/control.ts](./src/bridge/control.ts) or [src/bridge/outbound-actions.ts](./src/bridge/outbound-actions.ts)
 3. [src/codex/bridge-instructions.ts](./src/codex/bridge-instructions.ts)
 4. [src/codex/project-instructions.ts](./src/codex/project-instructions.ts)
 5. `test/**/*.test.ts`

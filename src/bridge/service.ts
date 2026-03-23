@@ -4,6 +4,7 @@ import { writeAudit } from "../audit.js";
 import { CodexAppServerClient } from "../codex/app-server-client.js";
 import { LOG_DIR } from "../config.js";
 import { executeControlActions, handleSlashControlCommand } from "./control.js";
+import { executeSendActions } from "./outbound-actions.js";
 import { MessageRouter } from "../gateway/message-router.js";
 import { SessionManager } from "../gateway/session-manager.js";
 import { getUserCacheDir, getWorkspaceRoot } from "../gateway/workspace.js";
@@ -14,7 +15,6 @@ import { loadWechatCredentials } from "../wechat/auth.js";
 import { WechatApiClient } from "../wechat/api.js";
 import { downloadInboundMedia } from "../wechat/inbound-media.js";
 import { chunkText, extractText } from "../wechat/message.js";
-import { sendFileFromPath, sendImageFromPath } from "../wechat/media.js";
 import { WechatPoller } from "../wechat/polling.js";
 import type { WechatInboundMessage } from "../wechat/types.js";
 
@@ -147,43 +147,16 @@ async function handleInboundMessage(
       actions: actions.controlActions
     });
 
-    let firstCaption = actions.cleanedText;
-    for (const action of actions.sendActions) {
-      if (action.type === "image") {
-        await sendImageFromPath({
-          api,
-          filePath: action.path,
-          toUserId: message.from_user_id,
-          contextToken: message.context_token,
-          caption: firstCaption
-        });
-        writeAudit({
-          kind: "wechat_image_outbound",
-          senderId: message.from_user_id,
-          threadId,
-          detail: action.path,
-          ok: true
-        });
-      } else {
-        await sendFileFromPath({
-          api,
-          filePath: action.path,
-          toUserId: message.from_user_id,
-          contextToken: message.context_token,
-          caption: firstCaption
-        });
-        writeAudit({
-          kind: "wechat_file_outbound",
-          senderId: message.from_user_id,
-          threadId,
-          detail: action.path,
-          ok: true
-        });
-      }
-      firstCaption = "";
-    }
+    const sendResult = await executeSendActions({
+      api,
+      senderId: message.from_user_id,
+      threadId,
+      contextToken: message.context_token,
+      actions: actions.sendActions,
+      firstCaption: actions.cleanedText
+    });
 
-    const finalText = [firstCaption, ...controlNotices].filter(Boolean).join("\n\n");
+    const finalText = [sendResult.remainingCaption, ...controlNotices].filter(Boolean).join("\n\n");
     if (finalText || actions.sendActions.length === 0) {
       if (actions.sendActions.length === 0 && actions.controlActions.length === 0) {
         log("codex-actions", "no executable actions found; falling back to text reply");

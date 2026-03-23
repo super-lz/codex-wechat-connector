@@ -6,6 +6,10 @@ import { getUserWorkspace } from "../gateway/workspace.js";
 import type { ControlAction } from "../protocol/actions.js";
 import { WechatApiClient } from "../wechat/api.js";
 
+type SlashControlParseResult =
+  | { handled: false }
+  | { handled: true; actions?: ControlAction[]; text?: string };
+
 export async function executeControlActions(params: {
   senderId: string;
   sessions: SessionManager;
@@ -38,6 +42,41 @@ export async function executeControlActions(params: {
   return notices;
 }
 
+export function parseSlashControlCommand(text: string): SlashControlParseResult {
+  const normalized = text.trim();
+  if (!normalized.startsWith("/")) {
+    return { handled: false };
+  }
+
+  const parts = normalized.split(/\s+/);
+  const command = parts[0];
+
+  if (command === "/thread" && parts[1] === "reset") {
+    return { handled: true, actions: [{ type: "thread.reset" }] };
+  }
+
+  if (command === "/workspace" && parts[1] === "reset") {
+    return { handled: true, actions: [{ type: "workspace.reset" }] };
+  }
+
+  if (command === "/workspace" && parts[1] === "set") {
+    const workspace = normalized.slice("/workspace set".length).trim();
+    if (!workspace) {
+      return { handled: true, text: "用法：/workspace set /absolute/path" };
+    }
+    if (!path.isAbsolute(workspace)) {
+      return { handled: true, text: "工作目录必须是绝对路径。" };
+    }
+    return { handled: true, actions: [{ type: "workspace.set", path: workspace }] };
+  }
+
+  if (command === "/workspace") {
+    return { handled: true, text: "__SHOW_WORKSPACE__" };
+  }
+
+  return { handled: false };
+}
+
 export async function handleSlashControlCommand(params: {
   senderId: string;
   text: string;
@@ -45,65 +84,12 @@ export async function handleSlashControlCommand(params: {
   sessions: SessionManager;
   api: WechatApiClient;
 }): Promise<{ handled: boolean }> {
-  const text = params.text.trim();
-  if (!text.startsWith("/")) {
-    return { handled: false };
+  const parsed = parseSlashControlCommand(params.text);
+  if (!parsed.handled) {
+    return parsed;
   }
 
-  const parts = text.split(/\s+/);
-  const command = parts[0];
-
-  if (command === "/thread" && parts[1] === "reset") {
-    params.sessions.clearThreadIdForUser(params.senderId);
-    await params.api.sendTextMessage({
-      toUserId: params.senderId,
-      text: "已重置当前 thread。下一条消息会创建新 thread。",
-      contextToken: params.contextToken
-    });
-    return { handled: true };
-  }
-
-  if (command === "/workspace" && parts[1] === "reset") {
-    params.sessions.clearWorkspaceOverrideForUser(params.senderId);
-    params.sessions.clearThreadIdForUser(params.senderId);
-    await params.api.sendTextMessage({
-      toUserId: params.senderId,
-      text: `已恢复默认工作目录，并重置 thread。\n默认目录：${getUserWorkspace(params.senderId)}`,
-      contextToken: params.contextToken
-    });
-    return { handled: true };
-  }
-
-  if (command === "/workspace" && parts[1] === "set") {
-    const workspace = text.slice("/workspace set".length).trim();
-    if (!workspace) {
-      await params.api.sendTextMessage({
-        toUserId: params.senderId,
-        text: "用法：/workspace set /absolute/path",
-        contextToken: params.contextToken
-      });
-      return { handled: true };
-    }
-    if (!path.isAbsolute(workspace)) {
-      await params.api.sendTextMessage({
-        toUserId: params.senderId,
-        text: "工作目录必须是绝对路径。",
-        contextToken: params.contextToken
-      });
-      return { handled: true };
-    }
-    mkdirSync(workspace, { recursive: true, mode: 0o755 });
-    params.sessions.setWorkspaceOverrideForUser(params.senderId, workspace);
-    params.sessions.clearThreadIdForUser(params.senderId);
-    await params.api.sendTextMessage({
-      toUserId: params.senderId,
-      text: `已切换工作目录，并重置 thread。\n当前目录：${workspace}`,
-      contextToken: params.contextToken
-    });
-    return { handled: true };
-  }
-
-  if (command === "/workspace") {
+  if (parsed.text === "__SHOW_WORKSPACE__") {
     const currentWorkspace =
       params.sessions.getWorkspaceOverrideForUser(params.senderId) ?? getUserWorkspace(params.senderId);
     await params.api.sendTextMessage({
@@ -114,5 +100,28 @@ export async function handleSlashControlCommand(params: {
     return { handled: true };
   }
 
-  return { handled: false };
+  if (parsed.text) {
+    await params.api.sendTextMessage({
+      toUserId: params.senderId,
+      text: parsed.text,
+      contextToken: params.contextToken
+    });
+    return { handled: true };
+  }
+
+  if (parsed.actions?.length) {
+    const notices = await executeControlActions({
+      senderId: params.senderId,
+      sessions: params.sessions,
+      actions: parsed.actions
+    });
+    await params.api.sendTextMessage({
+      toUserId: params.senderId,
+      text: notices.join("\n\n"),
+      contextToken: params.contextToken
+    });
+    return { handled: true };
+  }
+
+  return { handled: true };
 }

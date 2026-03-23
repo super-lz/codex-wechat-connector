@@ -4,7 +4,7 @@
 
 把微信消息转发给本机 Codex，并把 Codex 回复发回微信。
 
-![微信演示](./assets/demo.jpg)
+<img src="./assets/demo.jpg" alt="微信演示" width="320" />
 
 ## 概览
 
@@ -96,7 +96,7 @@ export CODEX_SANDBOX_MODE=workspace-write
 示例：
 - [env.example.sh](./env.example.sh)
 
-## 文件传输
+## 桥接动作
 
 如果要让 Codex 把本地文件或图片发回微信，或者让网关切工作目录、重置 thread，它都可以在最终回复里带 `codex-actions`：
 
@@ -123,6 +123,21 @@ export CODEX_SANDBOX_MODE=workspace-write
 - `workspace.set`、`workspace.reset`、`thread.reset` 是支持的宿主控制动作
 - 微信可能会转码 `image`；如果要保留原始格式，请用 `file`
 
+在微信里，你也可以直接用自然语言说“切到 /path/to/project 继续处理”。
+
+斜杠命令仍然保留，作为兜底入口：
+
+```text
+/workspace
+/workspace set /absolute/path
+/workspace reset
+/thread reset
+```
+
+切换工作目录时会自动重置当前 thread，所以下一条消息会在新目录里新开 thread。
+
+注意：自然语言触发这些桥接动作，依赖 thread 创建时注入的 developer instructions。升级网关后如果旧对话行为还像旧版本，先重置 thread 再试。
+
 ## 常用命令
 
 ```bash
@@ -136,19 +151,6 @@ npm run reset -- all
 ```
 
 `reset -- state` 清空网关状态，`reset -- all` 还会删除用户工作目录。
-
-## 微信内置控制
-
-你既可以直接用自然语言说“切到 /path/to/project 继续处理”，也可以显式使用这些命令：
-
-```text
-/workspace
-/workspace set /absolute/path
-/workspace reset
-/thread reset
-```
-
-切换工作目录时会自动重置当前 thread，所以下一条消息会在新目录里新开 thread。
 
 ## 开发
 
