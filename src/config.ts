@@ -19,6 +19,7 @@ export const DEFAULT_WECHAT_CDN_BASE_URL = "https://novac2c.cdn.weixin.qq.com/c2
 const appRoots = getAppRoots();
 export const APP_HOME = appRoots.appHome;
 export const STATE_DIR = APP_HOME;
+export const CACHE_DIR = appRoots.cacheDir;
 export const CONFIG_DIR = appRoots.configDir;
 export const CONFIG_FILE = join(CONFIG_DIR, "config.json");
 const fileConfig = readJsonFile<FileConfig>(CONFIG_FILE, {});

@@ -39,6 +39,7 @@ Default layout:
 
 ```text
 $HOME/.codex-plugin-wechat/
+  cache/
   config/config.json
   logs/
   sessions/
@@ -51,7 +52,7 @@ $HOME/codex-plugin-wechat-worker/
 Inbound files are stored under:
 
 ```text
-<user-workspace>/inbound/
+$HOME/.codex-plugin-wechat/cache/users/<user>/inbound/
 ```
 
 ## Configuration

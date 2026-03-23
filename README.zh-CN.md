@@ -39,6 +39,7 @@ npm run access -- pair <code>
 
 ```text
 $HOME/.codex-plugin-wechat/
+  cache/
   config/config.json
   logs/
   sessions/
@@ -51,7 +52,7 @@ $HOME/codex-plugin-wechat-worker/
 收到的文件会放到：
 
 ```text
-<user-workspace>/inbound/
+$HOME/.codex-plugin-wechat/cache/users/<user>/inbound/
 ```
 
 ## 配置

@@ -6,6 +6,7 @@ const WORKER_DIR_NAME = "codex-plugin-wechat-worker";
 
 export type AppRoots = {
   appHome: string;
+  cacheDir: string;
   configDir: string;
   logsDir: string;
   sessionsDir: string;
@@ -32,6 +33,7 @@ export function getAppRoots(): AppRoots {
   const appHome = getAppHome();
   return {
     appHome,
+    cacheDir: join(appHome, "cache"),
     configDir: join(appHome, "config"),
     logsDir: join(appHome, "logs"),
     sessionsDir: join(appHome, "sessions"),

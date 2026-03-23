@@ -14,10 +14,10 @@ export type InboundMedia = {
 
 export async function downloadInboundMedia(params: {
   message: WechatInboundMessage;
-  workspaceDir: string;
+  cacheDir: string;
   cdnBaseUrl?: string;
 }): Promise<InboundMedia> {
-  const inboundDir = path.join(params.workspaceDir, "inbound");
+  const inboundDir = path.join(params.cacheDir, "inbound");
   mkdirSync(inboundDir, { recursive: true, mode: 0o755 });
 
   const result: InboundMedia = {

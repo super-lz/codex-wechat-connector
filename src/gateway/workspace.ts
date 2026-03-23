@@ -1,7 +1,7 @@
 import { mkdirSync } from "node:fs";
 import { join } from "node:path";
 
-import { DEFAULT_WORK_ROOT } from "../config.js";
+import { CACHE_DIR, DEFAULT_WORK_ROOT } from "../config.js";
 
 export function getWorkspaceRoot(): string {
   mkdirSync(DEFAULT_WORK_ROOT, { recursive: true, mode: 0o755 });
@@ -15,6 +15,14 @@ export function getUserWorkspace(senderId: string): string {
   const workspace = join(usersDir, sanitizeSenderId(senderId));
   mkdirSync(workspace, { recursive: true, mode: 0o755 });
   return workspace;
+}
+
+export function getUserCacheDir(senderId: string): string {
+  const usersDir = join(CACHE_DIR, "users");
+  mkdirSync(usersDir, { recursive: true, mode: 0o700 });
+  const cacheDir = join(usersDir, sanitizeSenderId(senderId));
+  mkdirSync(cacheDir, { recursive: true, mode: 0o700 });
+  return cacheDir;
 }
 
 export function sanitizeSenderId(senderId: string): string {
