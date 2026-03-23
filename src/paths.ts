@@ -1,8 +1,8 @@
 import { homedir } from "node:os";
 import { join } from "node:path";
 
-const APP_DIR_NAME = ".codex-plugin-wechat";
-const WORKER_DIR_NAME = "codex-plugin-wechat-worker";
+const APP_DIR_NAME = ".codex-wechat-connector";
+const WORKER_DIR_NAME = "codex-wechat-connector-worker";
 
 export type AppRoots = {
   appHome: string;
@@ -26,7 +26,7 @@ export function getDefaultWorkerRoot(): string {
 }
 
 export function getAppHome(): string {
-  return process.env.CODEX_PLUGIN_WECHAT_HOME || getDefaultAppHome();
+  return process.env.CODEX_WECHAT_CONNECTOR_HOME || process.env.CODEX_PLUGIN_WECHAT_HOME || getDefaultAppHome();
 }
 
 export function getAppRoots(): AppRoots {
@@ -42,5 +42,10 @@ export function getAppRoots(): AppRoots {
 }
 
 export function getWorkerRoot(configuredWorkRoot?: string): string {
-  return process.env.WECHAT_CODEX_WORKROOT || configuredWorkRoot || getDefaultWorkerRoot();
+  return (
+    process.env.WECHAT_CODEX_CONNECTOR_WORKROOT ||
+    process.env.WECHAT_CODEX_WORKROOT ||
+    configuredWorkRoot ||
+    getDefaultWorkerRoot()
+  );
 }

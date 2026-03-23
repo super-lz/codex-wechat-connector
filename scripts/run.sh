@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT_DIR"
 
-GATEWAY_HOME="${CODEX_PLUGIN_WECHAT_HOME:-$HOME/.codex-plugin-wechat}"
+GATEWAY_HOME="${CODEX_WECHAT_CONNECTOR_HOME:-${CODEX_PLUGIN_WECHAT_HOME:-$HOME/.codex-wechat-connector}}"
 ENV_FILE="$GATEWAY_HOME/config/env.sh"
 
 if [[ -f "$ENV_FILE" ]]; then

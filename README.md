@@ -1,4 +1,4 @@
-# Codex WeChat Gateway
+# Codex WeChat Connector
 
 [中文说明](./README.zh-CN.md)
 
@@ -17,7 +17,7 @@ WeChat bridge for local Codex App Server sessions.
 ## Quick Start
 
 ```bash
-cd /path/to/codex-plugin-wechat
+cd /path/to/codex-wechat-connector
 npm install
 npm run smoke
 npm run login
@@ -34,27 +34,27 @@ npm run access -- pair <code>
 
 This project uses two root directories by default:
 
-- `gateway home`: `$HOME/.codex-plugin-wechat`
-- `worker root`: `$HOME/codex-plugin-wechat-worker`
+- `gateway home`: `$HOME/.codex-wechat-connector`
+- `worker root`: `$HOME/codex-wechat-connector-worker`
 
 Default layout:
 
 ```text
-$HOME/.codex-plugin-wechat/
+$HOME/.codex-wechat-connector/
   cache/
   config/config.json
   logs/
   sessions/
   wechat/
 
-$HOME/codex-plugin-wechat-worker/
+$HOME/codex-wechat-connector-worker/
   users/<user-workspace>/
 ```
 
 Inbound files are stored under:
 
 ```text
-$HOME/.codex-plugin-wechat/cache/users/<user>/inbound/
+$HOME/.codex-wechat-connector/cache/users/<user>/inbound/
 ```
 
 ## Configuration
@@ -62,13 +62,13 @@ $HOME/.codex-plugin-wechat/cache/users/<user>/inbound/
 Config file:
 
 ```bash
-$HOME/.codex-plugin-wechat/config/config.json
+$HOME/.codex-wechat-connector/config/config.json
 ```
 
 Persistent env overrides:
 
 ```bash
-$HOME/.codex-plugin-wechat/config/env.sh
+$HOME/.codex-wechat-connector/config/env.sh
 ```
 
 Example:
@@ -76,7 +76,7 @@ Example:
 ```json
 {
   "codexBin": "/path/to/codex",
-  "workRoot": "$HOME/codex-plugin-wechat-worker",
+  "workRoot": "$HOME/codex-wechat-connector-worker",
   "codexApprovalPolicy": "never",
   "codexSandboxMode": "workspace-write"
 }
@@ -86,8 +86,8 @@ Optional overrides:
 
 ```bash
 export CODEX_BIN=/absolute/path/to/codex
-export CODEX_PLUGIN_WECHAT_HOME=/absolute/path/to/.codex-plugin-wechat
-export WECHAT_CODEX_WORKROOT=/absolute/path/to/codex-plugin-wechat-worker
+export CODEX_WECHAT_CONNECTOR_HOME=/absolute/path/to/.codex-wechat-connector
+export WECHAT_CODEX_CONNECTOR_WORKROOT=/absolute/path/to/codex-wechat-connector-worker
 export CODEX_APPROVAL_POLICY=never
 export CODEX_SANDBOX_MODE=workspace-write
 ```

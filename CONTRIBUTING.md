@@ -5,7 +5,7 @@ For architecture and maintenance context, see [AGENTS.md](./AGENTS.md).
 ## Local Setup
 
 ```bash
-cd /path/to/codex-plugin-wechat
+cd /path/to/codex-wechat-connector
 npm install
 npm run test
 npm run check
@@ -21,14 +21,14 @@ export CODEX_BIN=/absolute/path/to/codex
 
 By default:
 
-- gateway home: `$HOME/.codex-plugin-wechat`
-- worker root: `$HOME/codex-plugin-wechat-worker`
+- gateway home: `$HOME/.codex-wechat-connector`
+- worker root: `$HOME/codex-wechat-connector-worker`
 
 Overrides:
 
 ```bash
-export CODEX_PLUGIN_WECHAT_HOME=/absolute/path/to/.codex-plugin-wechat
-export WECHAT_CODEX_WORKROOT=/absolute/path/to/codex-plugin-wechat-worker
+export CODEX_WECHAT_CONNECTOR_HOME=/absolute/path/to/.codex-wechat-connector
+export WECHAT_CODEX_CONNECTOR_WORKROOT=/absolute/path/to/codex-wechat-connector-worker
 ```
 
 ## Useful Commands

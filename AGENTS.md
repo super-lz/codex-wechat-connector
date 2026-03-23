@@ -4,7 +4,7 @@ This file is a maintenance guide for humans and coding agents working on this re
 
 ## Project Goal
 
-Codex WeChat Gateway connects WeChat messages to a local Codex App Server session.
+Codex WeChat Connector connects WeChat messages to a local Codex App Server session.
 
 Core responsibilities:
 
@@ -54,8 +54,8 @@ The gateway host is the middle layer. It owns:
 
 ## Default Paths
 
-- gateway home: `$HOME/.codex-plugin-wechat`
-- worker root: `$HOME/codex-plugin-wechat-worker`
+- gateway home: `$HOME/.codex-wechat-connector`
+- worker root: `$HOME/codex-wechat-connector-worker`
 
 Gateway home contains:
 
@@ -77,11 +77,11 @@ Inbound media is stored under:
 
 Primary config file:
 
-- `$HOME/.codex-plugin-wechat/config/config.json`
+- `$HOME/.codex-wechat-connector/config/config.json`
 
 Persistent env file:
 
-- `$HOME/.codex-plugin-wechat/config/env.sh`
+- `$HOME/.codex-wechat-connector/config/env.sh`
 
 The launcher script loads `env.sh` automatically.
 

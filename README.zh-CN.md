@@ -1,4 +1,4 @@
-# Codex WeChat Gateway
+# Codex WeChat Connector
 
 [English](./README.md)
 
@@ -17,7 +17,7 @@
 ## 快速开始
 
 ```bash
-cd /path/to/codex-plugin-wechat
+cd /path/to/codex-wechat-connector
 npm install
 npm run smoke
 npm run login
@@ -34,27 +34,27 @@ npm run access -- pair <code>
 
 默认有两个根目录：
 
-- `gateway home`: `$HOME/.codex-plugin-wechat`
-- `worker root`: `$HOME/codex-plugin-wechat-worker`
+- `gateway home`: `$HOME/.codex-wechat-connector`
+- `worker root`: `$HOME/codex-wechat-connector-worker`
 
 默认结构：
 
 ```text
-$HOME/.codex-plugin-wechat/
+$HOME/.codex-wechat-connector/
   cache/
   config/config.json
   logs/
   sessions/
   wechat/
 
-$HOME/codex-plugin-wechat-worker/
+$HOME/codex-wechat-connector-worker/
   users/<user-workspace>/
 ```
 
 收到的文件会放到：
 
 ```text
-$HOME/.codex-plugin-wechat/cache/users/<user>/inbound/
+$HOME/.codex-wechat-connector/cache/users/<user>/inbound/
 ```
 
 ## 配置
@@ -62,13 +62,13 @@ $HOME/.codex-plugin-wechat/cache/users/<user>/inbound/
 配置文件：
 
 ```bash
-$HOME/.codex-plugin-wechat/config/config.json
+$HOME/.codex-wechat-connector/config/config.json
 ```
 
 持久环境变量文件：
 
 ```bash
-$HOME/.codex-plugin-wechat/config/env.sh
+$HOME/.codex-wechat-connector/config/env.sh
 ```
 
 示例：
@@ -76,7 +76,7 @@ $HOME/.codex-plugin-wechat/config/env.sh
 ```json
 {
   "codexBin": "/path/to/codex",
-  "workRoot": "$HOME/codex-plugin-wechat-worker",
+  "workRoot": "$HOME/codex-wechat-connector-worker",
   "codexApprovalPolicy": "never",
   "codexSandboxMode": "workspace-write"
 }
@@ -86,8 +86,8 @@ $HOME/.codex-plugin-wechat/config/env.sh
 
 ```bash
 export CODEX_BIN=/绝对路径/codex
-export CODEX_PLUGIN_WECHAT_HOME=/绝对路径/.codex-plugin-wechat
-export WECHAT_CODEX_WORKROOT=/绝对路径/codex-plugin-wechat-worker
+export CODEX_WECHAT_CONNECTOR_HOME=/绝对路径/.codex-wechat-connector
+export WECHAT_CODEX_CONNECTOR_WORKROOT=/绝对路径/codex-wechat-connector-worker
 export CODEX_APPROVAL_POLICY=never
 export CODEX_SANDBOX_MODE=workspace-write
 ```

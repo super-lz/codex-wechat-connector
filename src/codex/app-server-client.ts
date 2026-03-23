@@ -252,9 +252,9 @@ export class CodexAppServerClient extends EventEmitter {
   private async initialize(): Promise<void> {
     const result = await this.request("initialize", {
       clientInfo: {
-        name: "codex-wechat-gateway",
+        name: "codex-wechat-connector",
         version: "0.1.0",
-        title: "Codex WeChat Gateway"
+        title: "Codex WeChat Connector"
       },
       capabilities: {
         experimentalApi: false,

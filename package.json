@@ -1,9 +1,9 @@
 {
-  "name": "codex-plugin-wechat",
+  "name": "codex-wechat-connector",
   "version": "0.1.0",
   "license": "MIT",
   "type": "module",
-  "description": "External gateway connecting WeChat and Codex App Server",
+  "description": "External connector linking WeChat and local Codex App Server sessions",
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "check": "tsc -p tsconfig.json --noEmit",

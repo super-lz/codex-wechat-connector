@@ -13,7 +13,7 @@ type FileConfig = {
   codexSandboxMode?: CodexSandboxMode;
 };
 
-export const APP_NAME = "codex-wechat-gateway";
+export const APP_NAME = "codex-wechat-connector";
 export const DEFAULT_WECHAT_BASE_URL = "https://ilinkai.weixin.qq.com/";
 export const DEFAULT_WECHAT_CDN_BASE_URL = "https://novac2c.cdn.weixin.qq.com/c2c";
 const appRoots = getAppRoots();
