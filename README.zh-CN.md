@@ -32,13 +32,13 @@ npm run access -- pair <code>
 
 默认有两个根目录：
 
-- `gateway home`: `$HOME/codex-plugin-wechat`
+- `gateway home`: `$HOME/.codex-plugin-wechat`
 - `worker root`: `$HOME/codex-plugin-wechat-worker`
 
 默认结构：
 
 ```text
-$HOME/codex-plugin-wechat/
+$HOME/.codex-plugin-wechat/
   config/config.json
   logs/
   sessions/
@@ -59,7 +59,7 @@ $HOME/codex-plugin-wechat-worker/
 配置文件：
 
 ```bash
-$HOME/codex-plugin-wechat/config/config.json
+$HOME/.codex-plugin-wechat/config/config.json
 ```
 
 示例：
@@ -77,7 +77,7 @@ $HOME/codex-plugin-wechat/config/config.json
 
 ```bash
 export CODEX_BIN=/绝对路径/codex
-export CODEX_PLUGIN_WECHAT_HOME=/绝对路径/codex-plugin-wechat
+export CODEX_PLUGIN_WECHAT_HOME=/绝对路径/.codex-plugin-wechat
 export WECHAT_CODEX_WORKROOT=/绝对路径/codex-plugin-wechat-worker
 export CODEX_APPROVAL_POLICY=never
 export CODEX_SANDBOX_MODE=workspace-write

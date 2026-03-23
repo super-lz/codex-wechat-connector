@@ -1,7 +1,7 @@
 import { homedir } from "node:os";
 import { join } from "node:path";
 
-const APP_DIR_NAME = "codex-plugin-wechat";
+const APP_DIR_NAME = ".codex-plugin-wechat";
 const WORKER_DIR_NAME = "codex-plugin-wechat-worker";
 
 export type AppRoots = {

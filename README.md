@@ -32,13 +32,13 @@ npm run access -- pair <code>
 
 This project uses two root directories by default:
 
-- `gateway home`: `$HOME/codex-plugin-wechat`
+- `gateway home`: `$HOME/.codex-plugin-wechat`
 - `worker root`: `$HOME/codex-plugin-wechat-worker`
 
 Default layout:
 
 ```text
-$HOME/codex-plugin-wechat/
+$HOME/.codex-plugin-wechat/
   config/config.json
   logs/
   sessions/
@@ -59,7 +59,7 @@ Inbound files are stored under:
 Config file:
 
 ```bash
-$HOME/codex-plugin-wechat/config/config.json
+$HOME/.codex-plugin-wechat/config/config.json
 ```
 
 Example:
@@ -77,7 +77,7 @@ Optional overrides:
 
 ```bash
 export CODEX_BIN=/absolute/path/to/codex
-export CODEX_PLUGIN_WECHAT_HOME=/absolute/path/to/codex-plugin-wechat
+export CODEX_PLUGIN_WECHAT_HOME=/absolute/path/to/.codex-plugin-wechat
 export WECHAT_CODEX_WORKROOT=/absolute/path/to/codex-plugin-wechat-worker
 export CODEX_APPROVAL_POLICY=never
 export CODEX_SANDBOX_MODE=workspace-write

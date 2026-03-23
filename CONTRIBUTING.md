@@ -19,13 +19,13 @@ export CODEX_BIN=/absolute/path/to/codex
 
 By default:
 
-- gateway home: `$HOME/codex-plugin-wechat`
+- gateway home: `$HOME/.codex-plugin-wechat`
 - worker root: `$HOME/codex-plugin-wechat-worker`
 
 Overrides:
 
 ```bash
-export CODEX_PLUGIN_WECHAT_HOME=/absolute/path/to/codex-plugin-wechat
+export CODEX_PLUGIN_WECHAT_HOME=/absolute/path/to/.codex-plugin-wechat
 export WECHAT_CODEX_WORKROOT=/absolute/path/to/codex-plugin-wechat-worker
 ```
 
